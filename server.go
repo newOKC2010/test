@@ -5,14 +5,14 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
 )
 
 func LoadPort() string {
-	if err := godotenv.Load(); err != nil {
-		panic(err)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
-	return os.Getenv("PORT")
+	return port
 }
 
 func main() {
@@ -22,6 +22,7 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
-	log.Printf("Starting server on port: %s", LoadPort())
-	app.Listen(":" + LoadPort())
+	port := LoadPort()
+	log.Printf("Starting server on port: %s", port)
+	app.Listen(":" + port)
 }
