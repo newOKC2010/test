@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Pull & Deploy
         run: |
-          cd ~/project/autoDeploy
+          cd ~/project/autoDeploy/test
           git pull
           docker compose down
           docker compose up -d --build
