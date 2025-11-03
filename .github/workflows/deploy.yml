@@ -2,20 +2,16 @@ name: Deploy
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    
     steps:
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/project/test
-            git pull
-            docker compose down
-            docker compose up -d --build
+      - name: Pull & Deploy
+        run: |
+          cd ~/project/autoDeploy
+          git pull
+          docker compose down
+          docker compose up -d --build
